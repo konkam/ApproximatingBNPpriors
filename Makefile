@@ -32,22 +32,10 @@
 ############# Figures
 
 ## accuracy_PknCnkVnk_1000_5000bits
-saves_for_figures/accuracy_PknCnkVnk.jld: scripts_for_figures/accuracy_PknCnkVnk_precomp.jl
-	julia --project=. scripts_for_figures/accuracy_PknCnkVnk_precomp.jl
+saves_for_figures/figure_1.jld: scripts_for_figures/cmp_figure_1.jl
+	julia --project=. scripts_for_figures/cmp_figure_1.jl
 
-figures/accuracy_PknCnkVnk_1000_5000bits.pdf: saves_for_figures/accuracy_PknCnkVnk.jld scripts_for_figures/accuracy_PknCnkVnk_fig.jl
-	julia --project=. scripts_for_figures/accuracy_PknCnkVnk_fig.jl
+figures/figure_1.pdf: saves_for_figures/figure_1.jld scripts_for_figures/plot_figure_1.jl
+	julia --project=. scripts_for_figures/plot_figure_1.jl
 
-
-## accuracy_Cnk_sigma
-saves_for_figures/accuracy_Cnk_sigma.jld: scripts_for_figures/accuracy_Cnk_sigma_precomp.jl
-	julia --project=. scripts_for_figures/accuracy_Cnk_sigma_precomp.jl
-
-figures/accuracy_Cnk_sigma.pdf: saves_for_figures/accuracy_Cnk_sigma.jld scripts_for_figures/accuracy_Cnk_sigma_fig.jl
-	julia --project=. scripts_for_figures/accuracy_Cnk_sigma_fig.jl
-
-## Vnk_instability
-figures/Vnk_instability.pdf: scripts_for_figures/Vnk_instability.jl
-	julia --project=. scripts_for_figures/Vnk_instability.jl
-
-Figures: figures/accuracy_PknCnkVnk_1000_5000bits.pdf figures/accuracy_Cnk_sigma.pdf figures/Vnk_instability.pdf
+Figures: figure_1.pdf
