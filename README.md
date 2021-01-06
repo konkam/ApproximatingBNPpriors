@@ -1,4 +1,4 @@
-# ApproximatingBNPpriors
+# Approximating Bayesian Nonparametric Priors
 Supporting information for the article: Approximating the clusters' prior distribution in Bayesian nonparametric models
 
 ## Abstract 
