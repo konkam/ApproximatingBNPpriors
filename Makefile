@@ -38,4 +38,9 @@ saves_for_figures/figure_1.jld: scripts_for_figures/cmp_figure_1.jl
 figures/figure_1.pdf: saves_for_figures/figure_1.jld scripts_for_figures/plot_figure_1.jl
 	julia --project=. scripts_for_figures/plot_figure_1.jl
 
-Figures: figure_1.pdf
+Figures: figures/figure_1.pdf
+
+############# Cleaning
+clean: 
+	$(RM) saves_for_figures/*
+	$(RM) figures/*
