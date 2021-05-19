@@ -3,7 +3,11 @@ using RCall, JLD
 
 R"
 library(gridExtra)
-library(cowplot)"
+library(cowplot)
+library(tidyverse)
+library(latex2exp)
+library(viridis)
+"
 
 
 function plot_draw_prior_distribution(df,N,beta,sigma,y_l,x_lab,n,m)
@@ -27,19 +31,20 @@ end
 
 
 
-load("/Users/dariabystrova/Documents/GitHub/approximatingBNPpriors/saves_for_figures/figure_1.jld")
+DF = load("/Users/dariabystrova/Documents/GitHub/approximatingBNPpriors/saves_for_figures/figure_3.jld")
+DF_100_1000 = DF["DF_100_1000"]
 
-n=100
+n=1000
 β= 1.0
 ntr=250
 sigma_vec= [0.25,0.75]
 
 N_plot = [40, 100]
 y_l = [0.2,0.1]
-P_all_approx_100 =Array{RObject{VecSxp}}(undef,length(sigma_vec))
+P_all_approx_1000 =Array{RObject{VecSxp}}(undef,length(sigma_vec))
 x_lab=[" ","k"]
 for i in (1:length(sigma_vec))
-             P_all_approx_100[i]= plot_draw_prior_distribution(DF_100[1][i],N_plot[i],β,sigma_vec[i],y_l[i],x_lab[i],n,0)
+             P_all_approx_1000[i]= plot_draw_prior_distribution(DF_100_1000[1][i],N_plot[i],β,sigma_vec[i],y_l[i],x_lab[i],n,0)
 
 end
 
@@ -50,13 +55,15 @@ y_l = [0.2,0.1]
 P_all_approx_10_100 =Array{RObject{VecSxp}}(undef,length(sigma_vec))
 x_lab=[" ","k"]
 for i in (1:length(sigma_vec))
-             P_all_approx_10_100[i]= plot_draw_prior_distribution(DF_100[2][i],N_plot[i],β,sigma_vec[i],y_l[i],x_lab[i],n,0)
+             P_all_approx_10_1000[i]= plot_draw_prior_distribution(DF_100_1000[2][i],N_plot[i],β,sigma_vec[i],y_l[i],x_lab[i],n,0)
 
 end
 
+
+
 R"
-m1=as.list($P_all_approx_100)
-m2 = as.list($P_all_approx_10_100)
+m1=as.list($P_all_approx_1000)
+m2 = as.list($P_all_approx_10_1000)
 prow <- plot_grid(
   m1[[1]] + theme(legend.position='none'),
   m2[[1]] + theme(legend.position='none'),
@@ -68,7 +75,7 @@ p <- plot_grid(prow,ncol = 1,rel_heights = c(10, 1))
 #ggsave(file = '~/Documents/GitHub/GibbsTypePriors/test/comparison/Plots_sigma_all_approximation_100_n.pdf', width= 6, height = 4,p)
 #save(m1,file ='~/Documents/GitHub/GibbsTypePriors/P_100_df_b1.Rdata')
 #save(m2,file ='~/Documents/GitHub/GibbsTypePriors/P_100_df_b10.Rdata')
-pdf('/Users/dariabystrova/Documents/GitHub/approximatingBNPpriors/figures/figure_1.pdf')
+pdf('/Users/dariabystrova/Documents/GitHub/approximatingBNPpriors/figures/figure_3.pdf')
 plot(p)
 dev.off()
 "

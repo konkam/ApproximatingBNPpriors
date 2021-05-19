@@ -1,11 +1,9 @@
-include("/Users/dariabystrova/Documents/GitHub/approximatingBNPpriors/scripts_for_figures/common_functions.jl")
-include("/Users/dariabystrova/Documents/GitHub/approximatingBNPpriors/scripts_for_figures/FK_sampling_functions.jl")
-include("/Users/dariabystrova/Documents/GitHub/approximatingBNPpriors/scripts_for_figures/SB_sampling_functions.jl")
 
 using JLD, GibbsTypePriors, DataFramesMeta, RCall, Optim, OptimTestProblems, StatsBase
 
-
-## functions to generate the plots
+include("/Users/dariabystrova/Documents/GitHub/approximatingBNPpriors/scripts_for_figures/common_functions.jl")
+include("/Users/dariabystrova/Documents/GitHub/approximatingBNPpriors/scripts_for_figures/FK_sampling_functions.jl")
+include("/Users/dariabystrova/Documents/GitHub/approximatingBNPpriors/scripts_for_figures/SB_sampling_functions.jl")
 
 function approximation_prior_distribution(beta,sigma,N,Nt,sigma_arr)
     Pkn_numeric_ = GibbsTypePriors.Pkn_NGG.(1:N, N, beta, sigma)
@@ -25,23 +23,27 @@ function approximation_prior_distribution(beta,sigma,N,Nt,sigma_arr)
 end
 
 
-###########
 
-n=100
+
+# truncation 250
+
+n=1000
 β= 1.0
 ntr=250
 sigma_vec= [0.25,0.75]
-DF_all_100 = map(x ->approximation_prior_distribution(β,x,n,ntr,sigma_vec),sigma_vec)
+DF_all_1000_250 = map(x ->approximation_prior_distribution(β,x,n,ntr,sigma_vec),sigma_vec)
 
 
 
-n=100
+n=1000
 β= 10.0
 ntr=250
 sigma_vec= [0.25,0.75]
-DF_all_100_10 = map(x ->approximation_prior_distribution(β,x,n,ntr,sigma_vec),sigma_vec)
-
-DF_100 = [DF_all_100,DF_all_100_10 ]
+DF_all_10_1000_250 = map(x ->approximation_prior_distribution(β,x,n,ntr,sigma_vec),sigma_vec)
 
 
-save("/Users/dariabystrova/Documents/GitHub/approximatingBNPpriors/saves_for_figures/figure_1.jld", "DF_100" ,DF_100)
+
+DF_1000_250 = [DF_all_1000_250,DF_all_10_1000_250]
+
+
+save("/Users/dariabystrova/Documents/GitHub/approximatingBNPpriors/saves_for_figures/figure_2.jld", "DF_1000_250" ,DF_1000_250)
